@@ -1,1 +1,1 @@
-allow vold kernel:system module_request;
+allow vold kernel:unix_stream_socket { read write };
