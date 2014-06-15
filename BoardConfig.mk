@@ -31,7 +31,7 @@ SKIP_SET_METADATA := true
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
 
 # Kernel properties
-TARGET_KERNEL_SOURCE := kernel/sony/msm8960t
+TARGET_KERNEL_SOURCE := kernel/sony/huashan
 TARGET_KERNEL_CONFIG := viskan_huashan_defconfig
 
 # Platform
@@ -70,8 +70,6 @@ WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_AP           := "ap"
 
 BOARD_USE_SONY_MACUPDATE := true
-
-BOARD_HARDWARE_CLASS := device/sony/huashan/cmhw
 
 # Camera
 COMMON_GLOBAL_CFLAGS += -DQCOM_BSP_CAMERA_ABI_HACK
@@ -139,24 +137,32 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147483648
 BOARD_SEPOLICY_DIRS += \
     device/sony/huashan/sepolicy
 
-BOARD_SEPOLICY_UNION := \
-       app.te \
-       bluetooth.te \
-       device.te \
-       domain.te \
-       drmserver.te \
-       file.te \
-       file_contexts \
-       hci_init.te \
-       init_shell.te \
-       keystore.te \
-       mediaserver.te \
-       kickstart.te \
-       netd.te \
-       rild.te \
-       surfaceflinger.te \
-       system.te \
-       ueventd.te \
-       vold.te \
-       wpa.te
+BOARD_SEPOLICY_UNION += \
+    file_contexts \
+    property_contexts \
+    te_macros \
+    bluetooth_loader.te \
+    bridge.te \
+    camera.te \
+    device.te \
+    dhcp.te \
+    domain.te \
+    drmserver.te \
+    file.te \
+    kickstart.te \
+    init.te \
+    mac_update.te \
+    mediaserver.te \
+    mpdecision.te \
+    netmgrd.te \
+    qmux.te \
+    rild.te \
+    rmt.te \
+    surfaceflinger.te \
+    system.te \
+    tee.te \
+    thermald.te \
+    ueventd.te \
+    vold.te \
+    wpa_supplicant.te
 
