@@ -23,7 +23,7 @@ include device/sony/qcom-common/BoardConfigCommon.mk
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := C5302,C5303,C5306,huashan
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/huashan/releasetools/ota_from_target_files
+#TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/huashan/releasetools/ota_from_target_files
 
 # On some of the older devices the recovery doesn't support metadata when setting permissions
 SKIP_SET_METADATA := true
@@ -31,7 +31,7 @@ SKIP_SET_METADATA := true
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
 
 # Kernel properties
-TARGET_KERNEL_SOURCE := kernel/sony/msm8960t
+TARGET_KERNEL_SOURCE := kernel/sony/huashan
 TARGET_KERNEL_CONFIG := viskan_huashan_defconfig
 
 # Platform
@@ -70,8 +70,6 @@ WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_AP           := "ap"
 
 BOARD_USE_SONY_MACUPDATE := true
-
-BOARD_HARDWARE_CLASS := device/sony/huashan/cmhw
 
 # Camera
 COMMON_GLOBAL_CFLAGS += -DQCOM_BSP_CAMERA_ABI_HACK
