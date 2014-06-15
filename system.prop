@@ -1,0 +1,76 @@
+#
+# Huashan
+#
+
+# Sony props
+ro.semc.version.cust=1272-3352
+ro.semc.version.cust_revision=R1B
+ro.somc.customerid=8242
+ro.semc.content.number=PA5
+ro.semc.version.fs_revision=12.1.A.1.201
+ro.semc.product.model=C5303
+ro.semc.ms_type_id=PM-0350-BV
+ro.semc.version.fs=GLOBAL-LTE
+ro.semc.product.name=Xperia SP
+ro.semc.product.device=C53
+
+#system props for time-services
+persist.timed.enable=true
+
+# Graphics
+ro.sf.lcd_density=320
+
+# Audio
+persist.audio.fluence.mode=endfire
+persist.audio.handset.mic=analog
+persist.audio.lowlatency.rec=false
+lpa.decode=true
+
+# System prop to select audio resampler quality
+af.resampler.quality=255
+
+##fluencetype can be "fluence" or "fluencepro" or "none"
+ro.qc.sdk.audio.fluencetype=none
+
+# MM modules
+media.stagefright.enable-player=true
+media.stagefright.enable-http=true
+media.stagefright.enable-aac=true
+media.stagefright.enable-qcp=true
+media.stagefright.enable-fma2dp=true
+media.stagefright.enable-scan=true
+media.aac_51_output_enabled=true
+
+# Hardware codecs
+qcom.hw.aac.encoder=true
+
+# RIL
+rild.libpath=/system/lib/libril-qc-qmi-1.so
+ro.telephony.call_ring.multiple=0
+persist.radio.apm_sim_not_pwdn=1
+persist.radio.add_power_save=1
+ro.ril.transmitpower=true
+telephony.lteOnCdmaDevice=0
+telephony.lteOnGsmDevice=1
+ro.telephony.default_network=9
+
+# Netmgrd
+ro.use_data_netmgrd=true
+persist.rmnet.mux=disabled
+
+# BT
+ro.qualcomm.bt.hci_transport=smd
+qcom.bt.le_dev_pwr_class=1
+
+# GPS
+persist.gps.qmienabled=true
+
+# QCOM Location
+ro.qc.sdk.izat.premium_enabled=0
+ro.qc.sdk.izat.service_mask=0x4
+persist.gps.qc_nlp_in_use=0
+ro.gps.agps_provider=1
+
+# stirctmode
+persist.sys.strictmode.visual=0
+persist.sys.strictmode.disable=1
