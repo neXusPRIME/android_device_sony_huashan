@@ -162,7 +162,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # semc
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.semc.version.sw=1272-3352 \
-    ro.semc.version.sw_revision=12.1.A.1.201 \
+    ro.semc.version.sw_revision=12.1.A.1.205 \
     ro.semc.version.sw_variant=GENERIC \
     ro.semc.version.sw_type=user \
 

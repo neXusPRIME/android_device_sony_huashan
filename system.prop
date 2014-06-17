@@ -7,7 +7,7 @@ ro.semc.version.cust=1272-3352
 ro.semc.version.cust_revision=R1B
 ro.somc.customerid=8242
 ro.semc.content.number=PA5
-ro.semc.version.fs_revision=12.1.A.1.201
+ro.semc.version.fs_revision=12.1.A.1.205
 ro.semc.product.model=C5303
 ro.semc.ms_type_id=PM-0350-BV
 ro.semc.version.fs=GLOBAL-LTE
@@ -70,6 +70,9 @@ ro.qc.sdk.izat.premium_enabled=0
 ro.qc.sdk.izat.service_mask=0x4
 persist.gps.qc_nlp_in_use=0
 ro.gps.agps_provider=1
+
+# System property for cabl
+ro.qualcomm.cabl=0
 
 # stirctmode
 persist.sys.strictmode.visual=0
