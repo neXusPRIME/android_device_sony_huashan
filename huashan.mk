@@ -70,10 +70,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh
 
-# FM Radio
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/system/etc/init.qcom.fm.sh:system/etc/init.qcom.fm.sh
-
 # Device specific part for two-stage boot
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/bootrec-device:recovery/bootrec-device
@@ -120,11 +116,7 @@ PRODUCT_PACKAGES += \
 # BT
 PRODUCT_PACKAGES += \
     hci_qcomm_init
-
-#FM Radio for sony device
-PRODUCT_PACKAGES += \
-    FmRadio
-
+    
 # Sensors
 PRODUCT_PACKAGES += \
     sensors.default
