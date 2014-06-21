@@ -25,8 +25,8 @@ include device/sony/qcom-common/BoardConfigCommon.mk
 TARGET_OTA_ASSERT_DEVICE := C5302,C5303,C5306,huashan
 #TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/huashan/releasetools/ota_from_target_files
 
-# On some of the older devices the recovery doesn't support metadata when setting permissions
-SKIP_SET_METADATA := true
+# Add support for all recoveries
+USE_SET_METADATA := true
 
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
 
@@ -42,13 +42,20 @@ BOARD_VENDOR_PLATFORM := viskan
 
 # Architecture
 TARGET_CPU_VARIANT := krait
+TARGET_ARCH_VARIANT_CPU := cortex-a9
 
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=softfp
+COMMON_GLOBAL_CFLAGS += -D__ARM_USE_PLD -D__ARM_CACHE_LINE_SIZE=64
 
-# optimization
-TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
+# Krait optimizations
+TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
+TARGET_USE_KRAIT_PLD_SET      := true
+TARGET_KRAIT_BIONIC_PLDOFFS   := 10
+TARGET_KRAIT_BIONIC_PLDTHRESH := 10
+TARGET_KRAIT_BIONIC_BBTHRESH  := 64
+TARGET_KRAIT_BIONIC_PLDSIZE   := 64
 
 # Kernel information
 BOARD_KERNEL_BASE     := 0x80200000
@@ -77,6 +84,10 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 # GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 TARGET_NO_RPC := true
+
+# FM radio
+BOARD_USES_STE_FMRADIO := true
+COMMON_GLOBAL_CFLAGS += -DSTE_FM
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
