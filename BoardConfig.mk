@@ -25,8 +25,8 @@ include device/sony/qcom-common/BoardConfigCommon.mk
 TARGET_OTA_ASSERT_DEVICE := C5302,C5303,C5306,huashan
 #TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/huashan/releasetools/ota_from_target_files
 
-# On some of the older devices the recovery doesn't support metadata when setting permissions
-SKIP_SET_METADATA := true
+# Add support for all recoveries
+USE_SET_METADATA := true
 
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
 
