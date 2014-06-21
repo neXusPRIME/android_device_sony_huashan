@@ -1,0 +1,89 @@
+From 0e9fe64c6354da853b21b14379d833eaf7eaba36 Mon Sep 17 00:00:00 2001
+From: neXusPRIME <yasir.elec@gmail.com>
+Date: Sat, 21 Jun 2014 19:23:46 +0500
+Subject: [PATCH] Add huashan config
+
+Change-Id: I714b51adc100f11a112705259985b42c86f15f36
+---
+ products/AndroidProducts.mk |  3 +++
+ products/pa_huashan.mk      | 41 +++++++++++++++++++++++++++++++++++++++++
+ vendorsetup.sh              |  1 +
+ 3 files changed, 45 insertions(+)
+ create mode 100644 products/pa_huashan.mk
+
+diff --git a/products/AndroidProducts.mk b/products/AndroidProducts.mk
+index f61b306..e064882 100644
+--- a/products/AndroidProducts.mk
++++ b/products/AndroidProducts.mk
+@@ -81,6 +81,9 @@ endif
+ ifeq (pa_honami,$(TARGET_PRODUCT))
+     PRODUCT_MAKEFILES += $(LOCAL_DIR)/pa_honami.mk
+ endif
++ifeq (pa_huashan,$(TARGET_PRODUCT))
++    PRODUCT_MAKEFILES += $(LOCAL_DIR)/pa_huashan.mk
++endif
+ ifeq (pa_i605,$(TARGET_PRODUCT))
+     PRODUCT_MAKEFILES += $(LOCAL_DIR)/pa_i605.mk
+ endif
+diff --git a/products/pa_huashan.mk b/products/pa_huashan.mk
+new file mode 100644
+index 0000000..862510a
+--- /dev/null
++++ b/products/pa_huashan.mk
+@@ -0,0 +1,41 @@
++# Copyright (C) 2013 ParanoidAndroid Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++# Check for target product
++
++ifeq (pa_huashan,$(TARGET_PRODUCT))
++
++# OVERLAY_TARGET adds overlay asset source
++OVERLAY_TARGET := pa_xhdpi
++
++PREFS_FROM_SOURCE ?= false
++
++# Inherit telephony common stuff
++$(call inherit-product, vendor/pa/configs/telephony.mk)
++
++# Include AOSPA common configuration
++include vendor/pa/main.mk
++
++# Inherit device configuration
++$(call inherit-product, device/sony/huashan/full_huashan.mk)
++
++# Override AOSP build properties
++PRODUCT_NAME := pa_huashan
++PRODUCT_DEVICE := huashan
++PRODUCT_BRAND := Sony
++PRODUCT_MANUFACTURER := Sony
++PRODUCT_MODEL := C5303
++PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=C5303 BUILD_FINGERPRINT=Sony/C5303/C5303:4.3/12.1.A.1.205/Mvt_nw:user/release-keys PRIVATE_BUILD_DESC="C5303-user 4.3 JB-MR2-VISKAN-140516-0635 235 test-keys"
++
++endif
+diff --git a/vendorsetup.sh b/vendorsetup.sh
+index 9170a92..a7aa952 100644
+--- a/vendorsetup.sh
++++ b/vendorsetup.sh
+@@ -21,6 +21,7 @@ add_lunch_combo pa_hercules-userdebug
+ add_lunch_combo pa_hikari-userdebug
+ add_lunch_combo pa_hlte-userdebug
+ add_lunch_combo pa_honami-userdebug
++add_lunch_combo pa_huashan-userdebug
+ add_lunch_combo pa_i605-userdebug
+ add_lunch_combo pa_i9082-userdebug
+ add_lunch_combo pa_i9100-userdebug
+-- 
+1.9.1
+
