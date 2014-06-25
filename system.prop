@@ -20,17 +20,32 @@ persist.timed.enable=true
 # Graphics
 ro.sf.lcd_density=320
 
-# Audio
+# System props for audio
+qcom.audio.init=complete
 persist.audio.fluence.mode=endfire
+persist.audio.vr.enable=false
 persist.audio.handset.mic=analog
 persist.audio.lowlatency.rec=false
 lpa.decode=true
+lpa.use-stagefright=true
 
 # System prop to select audio resampler quality
 af.resampler.quality=255
 
+# System prop to select MPQAudioPlayer by default on mpq8064
+mpq.audio.decode=true
+
 ##fluencetype can be "fluence" or "fluencepro" or "none"
 ro.qc.sdk.audio.fluencetype=none
+
+# System property for cabl
+ro.qualcomm.cabl=0
+
+#property to enable user to access Google WFD settings.
+persist.debug.wfd.enable=1
+
+#property to choose between virtual/external wfd display
+persist.sys.wfd.virtual=0
 
 # MM modules
 media.stagefright.enable-player=true
@@ -43,6 +58,11 @@ media.aac_51_output_enabled=true
 
 # Hardware codecs
 qcom.hw.aac.encoder=true
+
+#snapdragon value add features
+ro.qc.sdk.camera.facialproc=true
+ro.qc.sdk.gestures.camera=false
+ro.qc.sdk.sensors.gestures=false
 
 # RIL
 rild.libpath=/system/lib/libril-qc-qmi-1.so
@@ -70,9 +90,6 @@ ro.qc.sdk.izat.premium_enabled=0
 ro.qc.sdk.izat.service_mask=0x4
 persist.gps.qc_nlp_in_use=0
 ro.gps.agps_provider=1
-
-# System property for cabl
-ro.qualcomm.cabl=0
 
 # stirctmode
 persist.sys.strictmode.visual=0

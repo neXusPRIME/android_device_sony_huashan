@@ -350,6 +350,13 @@ def GetBootableImage(name, prebuilt_name, unpack_dir, tree_subdir,
 
   prebuilt_dir = os.path.join(unpack_dir, "BOOTABLE_IMAGES")
   prebuilt_path = os.path.join(prebuilt_dir, prebuilt_name)
+  custom_bootimg_mk = os.getenv('MKBOOTIMG')
+  if custom_bootimg_mk:
+    bootimage_path = os.path.join(os.getenv('OUT'), prebuilt_name)
+    print "using custom bootimage makefile %s..." % (custom_bootimg_mk,)
+    if not os.path.isdir(prebuilt_dir):
+        os.mkdir(prebuilt_dir)
+    shutil.copyfile(bootimage_path, prebuilt_path)
   if os.path.exists(prebuilt_path):
     print "using prebuilt %s..." % (prebuilt_name,)
     return File.FromLocalFile(name, prebuilt_path)
@@ -500,6 +507,7 @@ def CheckSize(data, target, info_dict):
   mount_point = "/" + target
 
   if info_dict["fstab"]:
+    if mount_point == "/userdata_extra": mount_point = "/data"
     if mount_point == "/userdata": mount_point = "/data"
     p = info_dict["fstab"][mount_point]
     fs_type = p.fs_type

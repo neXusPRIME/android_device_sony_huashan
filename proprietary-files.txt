@@ -229,7 +229,7 @@ lib/hw/nfc.msm8960.so
 #
 # Post Processing
 #
-bin/mm-pp-daemon
+bin/mm-qcamera-daemon
 
 #
 # Protocol Buffers
