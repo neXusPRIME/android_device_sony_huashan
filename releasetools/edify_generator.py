@@ -129,10 +129,8 @@ class EdifyGenerator(object):
     self.script.append('symlink("/data/etc/wlan_macaddr3", "/system/etc/firmware/wlan/macaddr3");')
 
   def LBLperm(self, customstrings):
-#    self.script.append('set_metadata("/system/bin/hijack.tar", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
-#    self.script.append('set_metadata("/system/bin/wipedata", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
-    self.script.append('set_perm(0, 0, 0777, "/system/bin/hijack.tar");')
-    self.script.append('set_perm(0, 0, 0777, "/system/bin/wipedata");')
+    self.script.append('set_metadata("/system/bin/hijack.tar", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
+    self.script.append('set_metadata("/system/bin/wipedata", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
 
   def ShowProgress(self, frac, dur):
     """Update the progress bar, advancing it over 'frac' over the next
