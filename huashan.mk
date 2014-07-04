@@ -139,6 +139,7 @@ PRODUCT_PACKAGES += \
     LiveWallpapers \
     LiveWallpapersPicker \
     VisualizationWallpapers \
+    CMFileManager
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
