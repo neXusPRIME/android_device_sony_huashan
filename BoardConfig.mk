@@ -38,6 +38,7 @@ TARGET_BOARD_PLATFORM_GPU := qcom-adreno320
 BOARD_VENDOR_PLATFORM := viskan
 
 # Architecture
+TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_CPU_VARIANT := krait
 
 # Architecture flags
