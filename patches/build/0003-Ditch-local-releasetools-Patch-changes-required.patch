@@ -1,0 +1,66 @@
+From 3f5f7df6637f88735fcf50a93d63c45e6f41051c Mon Sep 17 00:00:00 2001
+From: neXusPRIME <yasir.elec@gmail.com>
+Date: Sun, 6 Jul 2014 18:21:14 +0500
+Subject: [PATCH] Ditch local releasetools, Patch changes required
+
+Change-Id: I8bc3cb9ce3c0c16e5849971a0ca39c5e70e31892
+---
+ tools/releasetools/edify_generator.py    | 10 ++++++++++
+ tools/releasetools/ota_from_target_files |  6 ++++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/tools/releasetools/edify_generator.py b/tools/releasetools/edify_generator.py
+index 3375a4a..7af9d78 100644
+--- a/tools/releasetools/edify_generator.py
++++ b/tools/releasetools/edify_generator.py
+@@ -124,6 +124,16 @@ class EdifyGenerator(object):
+         self.script.append('delete("/system/bin/backuptool.sh");')
+         self.script.append('delete("/system/bin/backuptool.functions");')
+ 
++  def WIFImac(self, macsymlinks):
++    self.script.append('symlink("/data/etc/wlan_macaddr0", "/system/etc/firmware/wlan/macaddr0");')
++    self.script.append('symlink("/data/etc/wlan_macaddr1", "/system/etc/firmware/wlan/macaddr1");')
++    self.script.append('symlink("/data/etc/wlan_macaddr2", "/system/etc/firmware/wlan/macaddr2");')
++    self.script.append('symlink("/data/etc/wlan_macaddr3", "/system/etc/firmware/wlan/macaddr3");')
++
++  def LBLperm(self, customstrings):
++    self.script.append('set_metadata("/system/bin/hijack.tar", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
++    self.script.append('set_metadata("/system/bin/wipedata", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
++
+   def ShowProgress(self, frac, dur):
+     """Update the progress bar, advancing it over 'frac' over the next
+     'dur' seconds.  'dur' may be zero to advance it via SetProgress
+diff --git a/tools/releasetools/ota_from_target_files b/tools/releasetools/ota_from_target_files
+index d826204..7cd0143 100755
+--- a/tools/releasetools/ota_from_target_files
++++ b/tools/releasetools/ota_from_target_files
+@@ -526,6 +526,7 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
+     script.UnpackPackageDir("recovery", "/system")
+   script.UnpackPackageDir("system", "/system")
+ 
++  script.WIFImac("macsymlinks")
+   symlinks = CopySystemFiles(input_zip, output_zip)
+   script.MakeSymlinks(symlinks)
+ 
+@@ -536,6 +537,7 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
+ 
+   Item.GetMetadata(input_zip)
+   Item.Get("system").SetPermissions(script)
++  script.LBLperm("customstrings")
+ 
+   common.CheckSize(boot_img.data, "boot.img", OPTIONS.info_dict)
+   common.ZipWriteStr(output_zip, "boot.img", boot_img.data)
+@@ -545,8 +547,8 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
+     script.ShowProgress(0.2, 10)
+     script.RunBackup("restore")
+ 
+-  script.ShowProgress(0.2, 10)
+-  script.WriteRawImage("/boot", "boot.img")
++  #script.ShowProgress(0.2, 10)
++  #script.WriteRawImage("/boot", "boot.img")
+ 
+   script.ShowProgress(0.1, 0)
+   device_specific.FullOTA_InstallEnd()
+-- 
+1.9.1
+
