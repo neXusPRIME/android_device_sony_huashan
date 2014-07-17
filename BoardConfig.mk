@@ -30,9 +30,6 @@ TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
 TARGET_KERNEL_SOURCE := kernel/sony/msm8960t
 TARGET_KERNEL_CONFIG := viskan_huashan_defconfig
 
-# Allow moving app2SD
-TARGET_EXTERNAL_APPS = sdcard1
-
 # Platform
 TARGET_BOOTLOADER_BOARD_NAME := MSM8960
 TARGET_BOARD_PLATFORM := msm8960
