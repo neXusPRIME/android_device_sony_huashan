@@ -85,7 +85,7 @@ PRODUCT_COPY_FILES += \
 
 #OTA Updater App
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/app/com.otaupdater-2.apk:system/app/com.otaupdater-2
+    $(LOCAL_PATH)/prebuilt/app/com.otaupdater-2.apk:system/app/com.otaupdater-2.apk
 
 # Display
 PRODUCT_PACKAGES += \
