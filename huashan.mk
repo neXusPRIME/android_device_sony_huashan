@@ -83,6 +83,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/rootdir/system,system)
 
+#OTA Updater App
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/app/com.otaupdater-2.apk:system/app/com.otaupdater-2
+
 # Display
 PRODUCT_PACKAGES += \
     hwcomposer.msm8960 \
