@@ -4011,6 +4011,7 @@ SectionDevice
 		'RX1 MIX1 INP1':0:RX1
 		'EAR PA Gain':0:POS_2_DB
 		'DAC1 Switch':1:1
+		'RX1 Digital Volume':1:74
 	EndSequence
 
 	DisableSequence
