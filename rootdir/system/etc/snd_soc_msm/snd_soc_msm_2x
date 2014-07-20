@@ -3988,7 +3988,6 @@ SectionDevice
 		'RX1 MIX1 INP1':0:RX1
 		'EAR PA Gain':0:POS_6_DB
 		'DAC1 Switch':1:1
-		'RX1 Digital Volume':1:74
 	EndSequence
 
 	DisableSequence
@@ -4007,10 +4006,13 @@ SectionDevice
 	Comment "Handset Rx device for voice call"
 
 	EnableSequence
+        'SLIM RX1 MUX':0:AIF1_PB
 		'SLIM_0_RX Channels':0:One
+		'DAC1 MUX':0:RX1
 		'RX1 MIX1 INP1':0:RX1
 		'EAR PA Gain':0:POS_2_DB
 		'DAC1 Switch':1:1
+		'RX1 Digital Volume':1:78
 	EndSequence
 
 	DisableSequence
@@ -4102,7 +4104,6 @@ SectionDevice
 		'SLIM_0_RX Channels':0:Two
 		'RX3 MIX1 INP1':0:RX1
 		'RX3 MIX1 INP2':0:RX2
-		'RX3 Digital Volume':1:71
 		'LINEOUT1 DAC Switch':1:1
                 'LINEOUT1 Volume':1:100
 	EndSequence
@@ -4503,12 +4504,10 @@ SectionDevice
 	EnableSequence
 		'SLIM TX7 MUX':0:DEC4
 		'DEC4 MUX':0:ADC3
-		'DEC4 Volume':1:75
 		'ADC3 Volume':1:100
 		'MICBIAS4 CAPLESS Switch':1:1
 		'SLIM TX8 MUX':0:DEC6
 		'DEC6 MUX':0:ADC1
-		'DEC6 Volume':1:0
 		'ADC1 Volume':1:100
 		'MICBIAS1 CAPLESS Switch':1:1
 		'SLIM_0_TX Channels':0:Two
@@ -4523,7 +4522,6 @@ SectionDevice
 		'MICBIAS1 CAPLESS Switch':1:0
 		'ADC3 Volume':1:0
 		'ADC1 Volume':1:0
-		'DEC4 Volume':1:80
 	EndSequence
 
 	ACDBID	35:2
@@ -6272,7 +6270,6 @@ SectionModifier
 	Name "Capture Music"
 
 	EnableSequence
-		'DEC6 Volume':1:80
 		'MultiMedia1 Mixer SLIM_0_TX':1:1
 	EndSequence
 
