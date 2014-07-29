@@ -1,7 +1,7 @@
-From 2a8612413e46ead434a00efeec0d5cc31c294654 Mon Sep 17 00:00:00 2001
+From e2cf5a82011179d0c9291783e57c5cab9556d41b Mon Sep 17 00:00:00 2001
 From: neXusPRIME <yasir.elec@gmail.com>
 Date: Wed, 25 Jun 2014 20:33:42 +0500
-Subject: [PATCH] Add Linaro
+Subject: [PATCH 2/2] Add Linaro
 
 Change-Id: Ie6b51b45def504393c2d0b9776588095a34a3303
 ---
@@ -9,10 +9,10 @@ Change-Id: Ie6b51b45def504393c2d0b9776588095a34a3303
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/envsetup.sh b/envsetup.sh
-index 6dcd39b..d06ecaa 100644
+index 16392c5..4ca51b5 100644
 --- a/envsetup.sh
 +++ b/envsetup.sh
-@@ -129,7 +129,8 @@ function setpaths()
+@@ -153,7 +153,8 @@ function setpaths()
      case $ARCH in
          x86) toolchaindir=x86/i686-linux-android-$targetgccversion/bin
              ;;
