@@ -4,8 +4,8 @@
 
 #Paranoid neXus OTA Support
 otaupdater.otaver=1.0
-otaupdater.otatime=20140725-0000
-otaupdater.otaid=paranoidnexus-b11
+otaupdater.otatime=20140729-0000
+otaupdater.otaid=pacman-b1
 
 # Sony props
 ro.semc.version.cust=1272-3352
