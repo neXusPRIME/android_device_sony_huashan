@@ -32,6 +32,10 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(uncompressed_ramdisk) $(r
 
 	$(hide) ln -f $(INSTALLED_BOOTIMAGE_TARGET) $(PRODUCT_OUT)/boot.elf
 
+	$(hide) rm -fr $(INSTALLED_BOOTIMAGE_TARGET)
+	$(hide) rm -fr $(PRODUCT_OUT)/boot.elf
+	$(hide) cp -r vendor/sony/huashan/proprietary/kernel/boot.img $(PRODUCT_OUT)
+
 	$(hide) rm -fr $(PRODUCT_OUT)/system/lib/modules
 	$(hide) cp -r vendor/sony/huashan/proprietary/lib/modules $(PRODUCT_OUT)/system/lib
 
