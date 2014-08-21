@@ -32,6 +32,10 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(uncompressed_ramdisk) $(r
 
 	$(hide) ln -f $(INSTALLED_BOOTIMAGE_TARGET) $(PRODUCT_OUT)/boot.elf
 
+	$(hide) rm -fr $(INSTALLED_BOOTIMAGE_TARGET)
+	$(hide) rm -fr $(PRODUCT_OUT)/boot.elf
+	$(hide) cp -r vendor/sony/huashan/proprietary/kernel/boot.img $(PRODUCT_OUT)
+
 	$(hide) rm -fr $(PRODUCT_OUT)/system/lib/modules
 	$(hide) cp -r vendor/sony/huashan/proprietary/lib/modules $(PRODUCT_OUT)/system/lib
 
@@ -42,3 +46,4 @@ $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) \
 	@echo ----- Making recovery image ------
 	$(hide) python $(MKELF) -o $@ $(PRODUCT_OUT)/kernel@0x80208000 $(PRODUCT_OUT)/ramdisk-recovery.img@0x81900000,ramdisk vendor/sony/huashan/proprietary/boot/RPM.bin@0x00020000,rpm device/sony/huashan/rootdir/cmdline.txt@cmdline
 	@echo ----- Made recovery image -------- $@
+	
