@@ -7,7 +7,7 @@ ro.semc.version.cust=1272-3352
 ro.semc.version.cust_revision=R1B
 ro.somc.customerid=8242
 ro.semc.content.number=PA5
-ro.semc.version.fs_revision=12.1.A.1.205
+ro.semc.version.fs_revision=12.1.A.1.207
 ro.semc.product.model=C5303
 ro.semc.ms_type_id=PM-0350-BV
 ro.semc.version.fs=GLOBAL-LTE
@@ -24,7 +24,7 @@ ro.sf.lcd_density=320
 qcom.audio.init=complete
 persist.audio.fluence.mode=endfire
 persist.audio.vr.enable=false
-persist.audio.handset.mic=analog
+persist.audio.handset.mic=digital
 persist.audio.lowlatency.rec=false
 lpa.decode=true
 lpa.use-stagefright=true
@@ -36,7 +36,7 @@ af.resampler.quality=255
 mpq.audio.decode=true
 
 ##fluencetype can be "fluence" or "fluencepro" or "none"
-ro.qc.sdk.audio.fluencetype=none
+ro.qc.sdk.audio.fluencetype=fluence
 
 # System property for cabl
 ro.qualcomm.cabl=0
