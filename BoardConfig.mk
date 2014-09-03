@@ -23,7 +23,7 @@ include device/sony/qcom-common/BoardConfigCommon.mk
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := C5302,C5303,C5306,huashan
-
+TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/huashan/releasetools/ota_from_target_files
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
 
 # Kernel properties
@@ -74,6 +74,8 @@ WIFI_DRIVER_FW_PATH_AP           := "ap"
 
 BOARD_USE_SONY_MACUPDATE := true
 
+BOARD_HARDWARE_CLASS := device/sony/huashan/cmhw
+
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA := true
 
@@ -121,9 +123,13 @@ TARGET_USES_QCOM_BSP := true
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 BOARD_USES_LEGACY_ALSA_AUDIO := true
-TARGET_USES_QCOM_COMPRESSED_AUDIO := true
-TARGET_LS_USE_ALS_NODE := true
+TARGET_USES_QCOM_MM_AUDIO := true
 BOARD_HAVE_NEW_QCOM_CSDCLIENT := true
+BOARD_HAVE_CSD_FAST_CALL_SWITCH :=true
+BOARD_USES_FLUENCE_INCALL := true
+BOARD_USES_SEPERATED_AUDIO_INPUT := true
+BOARD_USES_SEPERATED_VOICE_SPEAKER_MIC := true
+
 
 # QCOM enhanced A/V
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
