@@ -83,6 +83,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/rootdir/system,system)
 
+# LBL Booting
+PRODUCT_COPY_FILES += \
+    device/sony/huashan/rootdir/system/bin/wipedata:system/bin/wipedata
+
 # Display
 PRODUCT_PACKAGES += \
     hwcomposer.msm8960 \
