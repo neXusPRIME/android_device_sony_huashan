@@ -1,9 +1,9 @@
-From 0e9fe64c6354da853b21b14379d833eaf7eaba36 Mon Sep 17 00:00:00 2001
+From 0c3622a3dff19ce847bd2646a3a0e395ac2fb0f0 Mon Sep 17 00:00:00 2001
 From: neXusPRIME <yasir.elec@gmail.com>
-Date: Sat, 21 Jun 2014 19:23:46 +0500
-Subject: [PATCH] Add huashan config
+Date: Sun, 21 Sep 2014 02:16:00 +0500
+Subject: [PATCH] Add huashan PA config
 
-Change-Id: I714b51adc100f11a112705259985b42c86f15f36
+Change-Id: I28a9792ec1cfeaaf422922d4277eed24453e44b1
 ---
  products/AndroidProducts.mk |  3 +++
  products/pa_huashan.mk      | 41 +++++++++++++++++++++++++++++++++++++++++
@@ -12,26 +12,26 @@ Change-Id: I714b51adc100f11a112705259985b42c86f15f36
  create mode 100644 products/pa_huashan.mk
 
 diff --git a/products/AndroidProducts.mk b/products/AndroidProducts.mk
-index f61b306..e064882 100644
+index 2b5c125..8b8e213 100644
 --- a/products/AndroidProducts.mk
 +++ b/products/AndroidProducts.mk
-@@ -81,6 +81,9 @@ endif
+@@ -69,6 +69,9 @@ endif
  ifeq (pa_honami,$(TARGET_PRODUCT))
      PRODUCT_MAKEFILES += $(LOCAL_DIR)/pa_honami.mk
  endif
 +ifeq (pa_huashan,$(TARGET_PRODUCT))
 +    PRODUCT_MAKEFILES += $(LOCAL_DIR)/pa_huashan.mk
 +endif
- ifeq (pa_i605,$(TARGET_PRODUCT))
-     PRODUCT_MAKEFILES += $(LOCAL_DIR)/pa_i605.mk
+ ifeq (pa_i9100,$(TARGET_PRODUCT))
+     PRODUCT_MAKEFILES += $(LOCAL_DIR)/pa_i9100.mk
  endif
 diff --git a/products/pa_huashan.mk b/products/pa_huashan.mk
 new file mode 100644
-index 0000000..862510a
+index 0000000..f33e181
 --- /dev/null
 +++ b/products/pa_huashan.mk
 @@ -0,0 +1,41 @@
-+# Copyright (C) 2013 ParanoidAndroid Project
++# Copyright (C) 2014 ParanoidAndroid Project
 +#
 +# Licensed under the Apache License, Version 2.0 (the "License");
 +# you may not use this file except in compliance with the License.
@@ -46,12 +46,12 @@ index 0000000..862510a
 +# limitations under the License.
 +
 +# Check for target product
-+
 +ifeq (pa_huashan,$(TARGET_PRODUCT))
 +
 +# OVERLAY_TARGET adds overlay asset source
 +OVERLAY_TARGET := pa_xhdpi
 +
++# Build paprefs from sources
 +PREFS_FROM_SOURCE ?= false
 +
 +# Inherit telephony common stuff
@@ -66,24 +66,24 @@ index 0000000..862510a
 +# Override AOSP build properties
 +PRODUCT_NAME := pa_huashan
 +PRODUCT_DEVICE := huashan
-+PRODUCT_BRAND := Sony
++PRODUCT_BRAND := sony
 +PRODUCT_MANUFACTURER := Sony
 +PRODUCT_MODEL := C5303
 +PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=C5303 BUILD_FINGERPRINT=Sony/C5303/C5303:4.3/12.1.A.1.207/MPt_nw:user/release-keys PRIVATE_BUILD_DESC="C5303-user 4.3 JB-MR2-VISKAN-140708-0812 262 test-keys"
 +
 +endif
 diff --git a/vendorsetup.sh b/vendorsetup.sh
-index 9170a92..a7aa952 100644
+index c856a13..80062fd 100644
 --- a/vendorsetup.sh
 +++ b/vendorsetup.sh
-@@ -21,6 +21,7 @@ add_lunch_combo pa_hercules-userdebug
- add_lunch_combo pa_hikari-userdebug
- add_lunch_combo pa_hlte-userdebug
+@@ -17,6 +17,7 @@ add_lunch_combo pa_gee-userdebug
+ add_lunch_combo pa_geeb-userdebug
+ add_lunch_combo pa_hercules-userdebug
  add_lunch_combo pa_honami-userdebug
 +add_lunch_combo pa_huashan-userdebug
- add_lunch_combo pa_i605-userdebug
- add_lunch_combo pa_i9082-userdebug
  add_lunch_combo pa_i9100-userdebug
+ add_lunch_combo pa_i9100g-userdebug
+ add_lunch_combo pa_i9300-userdebug
 -- 
 1.9.1
 
