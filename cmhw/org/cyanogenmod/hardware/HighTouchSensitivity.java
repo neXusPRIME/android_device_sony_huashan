@@ -18,35 +18,40 @@ package org.cyanogenmod.hardware;
 
 import org.cyanogenmod.hardware.util.FileUtils;
 
-import java.io.File;
-
+/**
+ * Glove mode / high touch sensitivity
+ */
 public class HighTouchSensitivity {
 
-    private static String FILE_GLOVEMODE = "/sys/devices/i2c-3/3-0024/main_ttsp_core.cyttsp4_i2c_adapter/signal_disparity";
+    private static String GLOVEMODE_PATH = "/sys/devices/i2c-3/3-0024/main_ttsp_core.cyttsp4_i2c_adapter/finger_threshold";
 
-    public static boolean isSupported() {
-        File f = new File(FILE_GLOVEMODE);
+    /**
+     * Whether device supports high touch sensitivity.
+     *
+     * @return boolean Supported devices must return always true
+     */
+    public static boolean isSupported() { return true; }
 
-        if(f.exists()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    /**
+     * This method return the current activation status of high touch sensitivity
+     *
+     * @return boolean Must be false if high touch sensitivity is not supported or not activated,
+     * or the operation failed while reading the status; true in any other case.
+     */
     public static boolean isEnabled() {
-        if (Integer.parseInt(FileUtils.readOneLine(FILE_GLOVEMODE)) == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (FileUtils.readOneLine(GLOVEMODE_PATH).equals("20"));
     }
 
+    /**
+     * This method allows to setup high touch sensitivity status.
+     *
+     * @param status The new high touch sensitivity status
+     * @return boolean Must be false if high touch sensitivity is not supported or the operation
+     * failed; true in any other case.
+     */
     public static boolean setEnabled(boolean status) {
-        if (status == true) {
-            return FileUtils.writeLine(FILE_GLOVEMODE, "0");
-        } else {
-            return FileUtils.writeLine(FILE_GLOVEMODE, "1");
-        }
+        return FileUtils.writeLine(GLOVEMODE_PATH, (status ? "20" : "100"));
     }
+
 }
+
