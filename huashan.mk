@@ -45,8 +45,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
-PRODUCT_BOOT_JARS += qcmediaplayer
-
 # Device specific init
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/init.qcom.syspart_fixup.sh:root/init.qcom.syspart_fixup.sh \
@@ -129,14 +127,6 @@ PRODUCT_PACKAGES += \
 # Wifi service
 PRODUCT_PACKAGES += \
     wcnss_service
-
-PRODUCT_PACKAGES += \
-    qcom.fmradio \
-    libqcomfm_jni \
-    FM2 \
-    FMRecord
-
-PRODUCT_PACKAGES += qcmediaplayer
 
 # WIFI MAC update
 PRODUCT_PACKAGES += \
