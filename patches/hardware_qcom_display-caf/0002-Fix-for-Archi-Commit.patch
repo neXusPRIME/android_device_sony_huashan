@@ -1,0 +1,26 @@
+From 79b2edd5721a7ca7a0933dc4b6af545284cf6c6d Mon Sep 17 00:00:00 2001
+From: neXusPRIME <yasir.elec@gmail.com>
+Date: Fri, 27 Jun 2014 19:18:10 +0500
+Subject: [PATCH] Fix for Archi Commit
+
+Change-Id: I87c4ba162e843cd39e6ad8900f74161be4db2df4
+---
+ libhwcomposer/Android.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libhwcomposer/Android.mk b/libhwcomposer/Android.mk
+index 8bd5608..b197389 100644
+--- a/libhwcomposer/Android.mk
++++ b/libhwcomposer/Android.mk
+@@ -12,7 +12,7 @@ LOCAL_SHARED_LIBRARIES        := $(common_libs) libEGL liboverlay \
+                                  libexternal libqdutils libhardware_legacy \
+                                  libdl libmemalloc libqservice libsync \
+                                  libbinder libmedia libvirtual libskia
+-LOCAL_CFLAGS                  := $(common_flags) -DLOG_TAG=\"qdhwcomposer\"
++LOCAL_CFLAGS                  := $(common_flags) -DLOG_TAG=\"qdhwcomposer\" -Os
+ LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps)
+ LOCAL_SRC_FILES               := hwc.cpp          \
+                                  hwc_utils.cpp    \
+-- 
+1.9.1
+
