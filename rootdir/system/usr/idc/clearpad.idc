@@ -5,5 +5,6 @@ touch.deviceType = touchScreen
 touch.pressure.scale = 0.0074
 
 # Size
-touch.size.scale = 16.91
-touch.size.bias = 67.65
+touch.size.scale = 32.69
+#touch.size.scale = 16.91
+#touch.size.bias = 67.65
