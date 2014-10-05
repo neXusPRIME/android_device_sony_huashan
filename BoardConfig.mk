@@ -13,17 +13,18 @@
 # limitations under the License.
 
 # inherit from Sony common
-include device/sony/common/BoardConfigCommon.mk
+include device/sony/lbcommon/BoardConfigCommon.mk
 
 # inherit from qcom-common
-include device/sony/qcom-common/BoardConfigCommon.mk
+include device/sony/lbqcom-common/BoardConfigCommon.mk
 
 # inherit from the proprietary version
--include vendor/sony/huashan/BoardConfigVendor.mk
+-include vendor/lbsony/huashan/BoardConfigVendor.mk
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := C5302,C5303,C5306,huashan
+TARGET_OTA_ASSERT_DEVICE := lbC5302,lbC5303,lbC5306,lbhuashan
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/huashan/releasetools/ota_from_target_files
+
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
 
 # Kernel properties
@@ -74,7 +75,7 @@ WIFI_DRIVER_FW_PATH_AP           := "ap"
 
 BOARD_USE_SONY_MACUPDATE := true
 
-BOARD_HARDWARE_CLASS := device/sony/huashan/cmhw
+BOARD_HARDWARE_CLASS += device/sony/huashan/cmhw
 
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA := true
@@ -129,7 +130,6 @@ BOARD_HAVE_CSD_FAST_CALL_SWITCH :=true
 BOARD_USES_FLUENCE_INCALL := true
 BOARD_USES_SEPERATED_AUDIO_INPUT := true
 BOARD_USES_SEPERATED_VOICE_SPEAKER_MIC := true
-
 
 # QCOM enhanced A/V
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true

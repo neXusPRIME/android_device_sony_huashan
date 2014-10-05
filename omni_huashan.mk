@@ -30,7 +30,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 $(call inherit-product, vendor/omni/config/common.mk)
 
 # Inherit from hardware-specific part of the product configuration
-$(call inherit-product, device/sony/huashan/full_huashan.mk)
+$(call inherit-product, device/sony/huashan/full_lbhuashan.mk)
 
 PRODUCT_NAME := omni_huashan
 PRODUCT_DEVICE := huashan

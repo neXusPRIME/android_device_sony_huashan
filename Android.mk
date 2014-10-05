@@ -1,6 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),huashan)
+ifeq ($(TARGET_DEVICE),lbhuashan)
     include $(call first-makefiles-under,$(LOCAL_PATH))
 
     $(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wcd9310; \

@@ -1,27 +1,9 @@
 [
   {
     "remote":       "github",
-    "repository":   "CyanogenMod/android_device_sony_common",
-    "target_path":  "device/sony/common",
-    "revision":     "cm-11.0"
-  },
-  {
-    "remote":       "github",
     "repository":   "CyanogenMod/android_hardware_cm",
     "target_path":  "hardware/cm",
     "revision":     "cm-11.0"
-  },
-  {
-    "remote":       "github",
-    "repository":   "CyanogenMod/android_device_sony_qcom-common",
-    "target_path":  "device/sony/qcom-common",
-    "revision":     "cm-11.0"
-  },
-  {
-    "remote":       "github",
-    "repository":   "DooMLoRD/android_kernel_sony_msm8960t",
-    "target_path":  "kernel/sony/msm8960t",
-    "revision":     "sony_sources"
   },
   {
     "remote":       "github",
@@ -29,10 +11,4 @@
     "target_path":  "hardware/sony/DASH",
     "revision":     "cm-11.0"
   },
-  {
-    "remote":       "github",
-    "repository":   "Ultrax5/android_vendor_sony",
-    "target_path":  "vendor/sony",
-    "revision":     "master"
-  }
 ]

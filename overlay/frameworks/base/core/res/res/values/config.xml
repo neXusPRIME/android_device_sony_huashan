@@ -170,10 +170,10 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>10</item>  <!--    0 -    5 -->
-        <item>30</item>  <!--    5 -   10 -->
-        <item>50</item>  <!--   10 -   15 -->
-        <item>65</item>  <!--   15 -   20 -->
+        <item>40</item>  <!--    0 -    5 -->
+        <item>50</item>  <!--    5 -   10 -->
+        <item>60</item>  <!--   10 -   15 -->
+        <item>70</item>  <!--   15 -   20 -->
         <item>80</item>  <!--   20 -   30 -->
         <item>105</item> <!--   30 -   50 -->
         <item>120</item> <!--   50 -   75 -->
@@ -182,10 +182,10 @@
         <item>165</item> <!--  150 -  200 -->
         <item>185</item> <!--  200 -  300 -->
         <item>210</item> <!--  300 -  500 -->
-        <item>230</item> <!--  500 -  750 -->
-        <item>240</item> <!--  750 - 1000 -->
-        <item>250</item> <!-- 1000 - 1022 -->
-        <item>255</item> <!-- 1022+ -->
+        <item>220</item> <!--  500 -  750 -->
+        <item>230</item> <!--  750 - 1000 -->
+        <item>240</item> <!-- 1000 - 1022 -->
+        <item>250</item> <!-- 1022+ -->
     </integer-array>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
@@ -306,6 +306,16 @@
     <!-- Device supports LED flashlight -->
     <bool name="config_enableTorch">true</bool>
 
+    <!-- Defines the system property to set for performance profile xe: sys.cpu.modes. Leave it
+         blank if the device do not support performance profiles -->
+    <string name="config_perf_profile_prop" translatable="false">sys.perf.profile</string>
+
+    <!-- When config_perf_profile_prop is defined, this value MUST be the index of
+         one of the listes values in frameworks/base/core/res/res/values/cm_arrays.xml
+         for "perf_profile_values" array. Leave it blank if the device do not support
+         performance profiles  -->
+    <string name="config_perf_profile_default_entry" translatable="false">1</string>
+
     <!-- Hardware 'face' keys present on the device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
          of the following keys present:
@@ -318,15 +328,5 @@
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
     <integer name="config_deviceHardwareKeys">32</integer>
-
-    <!-- Defines the system property to set for performance profile xe: sys.cpu.modes. Leave it
-         blank if the device do not support performance profiles -->
-    <string name="config_perf_profile_prop" translatable="false">sys.perf.profile</string>
-
-    <!-- When config_perf_profile_prop is defined, this value MUST be the index of
-         one of the listes values in frameworks/base/core/res/res/values/cm_arrays.xml
-         for "perf_profile_values" array. Leave it blank if the device do not support
-         performance profiles  -->
-    <string name="config_perf_profile_default_entry" translatable="false">1</string>
 
 </resources>

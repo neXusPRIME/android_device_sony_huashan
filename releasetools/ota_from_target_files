@@ -373,7 +373,7 @@ def AppendAssertions(script, info_dict):
       device = GetBuildProp("ro.product.device", info_dict)
   else:
     device = OPTIONS.override_device
-  script.AssertDevice(device)
+#  script.AssertDevice(device)
 
 
 def MakeRecoveryPatch(input_tmp, output_zip, recovery_img, boot_img):
@@ -521,6 +521,10 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
 
+  script.Mount("/data")
+  script.ValidateSignatures("data")
+  script.Unmount("/data")
+
   if "selinux_fc" in OPTIONS.info_dict:
     WritePolicyConfig(OPTIONS.info_dict["selinux_fc"], output_zip)
 
@@ -537,8 +541,6 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
   boot_img = common.GetBootableImage("boot.img", "boot.img",
                                      OPTIONS.input_tmp, "BOOT")
   if not OPTIONS.no_separate_recovery:
-    recovery_img = common.GetBootableImage("recovery.img", "recovery.img",
-                                           OPTIONS.input_tmp, "RECOVERY")
     MakeRecoveryPatch(OPTIONS.input_tmp, output_zip, recovery_img, boot_img)
 
   Item.GetMetadata(input_zip)
@@ -548,6 +550,8 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
   common.CheckSize(boot_img.data, "boot.img", OPTIONS.info_dict)
   common.ZipWriteStr(output_zip, "boot.img", boot_img.data)
   script.ShowProgress(0.2, 0)
+
+  script.ValidateSignatures("cleanup")
 
   if OPTIONS.backuptool:
     script.ShowProgress(0.2, 10)
@@ -611,7 +615,7 @@ def GetBuildProp(prop, info_dict):
   try:
     return info_dict.get("build.prop", {})[prop]
   except KeyError:
-    raise common.ExternalError("couldn't find %s in build.prop" % (property,))
+    raise common.ExternalError("couldn't find %s in build.prop" % (prop,))
 
 def AddToKnownPaths(filename, known_paths):
   if filename[-1] == "/":
@@ -723,13 +727,14 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
       patch_list.append((tf, sf, tf.size, common.sha1(d).hexdigest()))
       largest_source_size = max(largest_source_size, sf.size)
 
+  script.Mount("/system")
+
   if not OPTIONS.override_prop:
     source_fp = GetBuildProp("ro.build.fingerprint", OPTIONS.source_info_dict)
     target_fp = GetBuildProp("ro.build.fingerprint", OPTIONS.target_info_dict)
     metadata["pre-build"] = source_fp
     metadata["post-build"] = target_fp
 
-    script.Mount("/system")
     script.AssertSomeFingerprint(source_fp, target_fp)
 
   source_boot = common.GetBootableImage(

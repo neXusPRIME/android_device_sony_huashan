@@ -39,7 +39,7 @@
              android:storageDescription="@string/storage_internal"
              android:emulated="true"
              android:primary="true"
-             android:mtpReserve="100" />
+             android:mtpReserve="350" />
 
     <!-- external sd card -->
     <storage android:mountPoint="/storage/sdcard1"
