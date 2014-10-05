@@ -174,3 +174,5 @@ BOARD_SEPOLICY_UNION += \
     vold.te \
     wpa_supplicant.te
 
+#OMNI specifics
+DEVICE_RESOLUTION := 720x1280
