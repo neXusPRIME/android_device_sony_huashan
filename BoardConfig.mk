@@ -13,16 +13,16 @@
 # limitations under the License.
 
 # inherit from Sony common
-include device/sony/lbcommon/BoardConfigCommon.mk
+include device/sony/common/BoardConfigCommon.mk
 
 # inherit from qcom-common
-include device/sony/lbqcom-common/BoardConfigCommon.mk
+include device/sony/qcom-common/BoardConfigCommon.mk
 
 # inherit from the proprietary version
--include vendor/lbsony/huashan/BoardConfigVendor.mk
+-include vendor/sony/huashan/BoardConfigVendor.mk
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := lbC5302,lbC5303,lbC5306,lbhuashan
+TARGET_OTA_ASSERT_DEVICE := C5302,C5303,C5306,huashan
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/sony/huashan/releasetools/ota_from_target_files
 
 TARGET_SPECIFIC_HEADER_PATH += device/sony/huashan/include
