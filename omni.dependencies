@@ -1,9 +1,21 @@
 [
   {
     "remote":       "github",
-    "repository":   "CyanogenMod/android_hardware_cm",
-    "target_path":  "hardware/cm",
-    "revision":     "cm-11.0"
+    "repository":   "neXusPRIME/android_device_sony_common",
+    "target_path":  "device/sony/common",
+    "revision":     "android-4.4"
+  },
+  {
+    "remote":       "github",
+    "repository":   "neXusPRIME/android_device_sony_qcom-common",
+    "target_path":  "device/sony/qcom-common",
+    "revision":     "android-4.4"
+  },
+  {
+    "remote":       "github",
+    "repository":   "BrainFuze/android_vendor_sony",
+    "target_path":  "vendor/sony",
+    "revision":     "cm-11.0_LBL"
   },
   {
     "remote":       "github",
