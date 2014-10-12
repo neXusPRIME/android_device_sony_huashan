@@ -31,13 +31,13 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(uncompressed_ramdisk) $(r
 	$(hide) python $(MKELF) -o $@ $(PRODUCT_OUT)/kernel@0x80208000 $(PRODUCT_OUT)/combinedroot.fs@0x81900000,ramdisk vendor/sony/huashan/proprietary/boot/RPM.bin@0x00020000,rpm device/sony/huashan/rootdir/cmdline.txt@cmdline
 
 	$(hide) ln -f $(INSTALLED_BOOTIMAGE_TARGET) $(PRODUCT_OUT)/boot.elf
-	$(hide) cp -r vendor/lbsony/huashan/proprietary/kernel/boot.img $(PRODUCT_OUT)
+	$(hide) cp -r vendor/sony/huashan/proprietary/kernel/boot.img $(PRODUCT_OUT)
 
-	$(hide) cp $(PRODUCT_OUT)/system/lib/modules/cpufreq_wheatley.ko vendor/lbsony/huashan/proprietary/lib/modules/
+	$(hide) cp $(PRODUCT_OUT)/system/lib/modules/cpufreq_wheatley.ko vendor/sony/huashan/proprietary/lib/modules/
 
 	$(hide) rm -fr $(PRODUCT_OUT)/system/lib/modules
 	$(hide) cp -r vendor/sony/huashan/proprietary/lib/modules $(PRODUCT_OUT)/system/lib
-	$(hide) rm vendor/lbsony/huashan/proprietary/lib/modules/cpufreq_wheatley.ko
+	$(hide) rm vendor/sony/huashan/proprietary/lib/modules/cpufreq_wheatley.ko
 	$(hide) cd $(PRODUCT_OUT)/root && tar -cvf ramdisk.tar `ls $(PRODUCT_OUT)/root`
 	$(hide) mv $(PRODUCT_OUT)/root/ramdisk.tar $(PRODUCT_OUT)/system/bin/ramdisk.tar
 
@@ -46,5 +46,5 @@ $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) \
 	$(recovery_ramdisk) \
 	$(recovery_kernel)
 	@echo ----- Making recovery image ------
-	$(hide) python $(MKELF) -o $@ $(PRODUCT_OUT)/kernel@0x80208000 $(PRODUCT_OUT)/ramdisk-recovery.img@0x81900000,ramdisk vendor/lbsony/huashan/proprietary/boot/RPM.bin@0x00020000,rpm device/sony/huashan/rootdir/cmdline.txt@cmdline
+	$(hide) python $(MKELF) -o $@ $(PRODUCT_OUT)/kernel@0x80208000 $(PRODUCT_OUT)/ramdisk-recovery.img@0x81900000,ramdisk vendor/sony/huashan/proprietary/boot/RPM.bin@0x00020000,rpm device/sony/huashan/rootdir/cmdline.txt@cmdline
 	@echo ----- Made recovery image -------- $@

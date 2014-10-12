@@ -92,12 +92,12 @@ class EdifyGenerator(object):
 
   def AssertDevice(self, device):
     """Assert that the device identifier is the given string."""
-    cmd = ('assert(' +
+    cmd = ('(' +
            ' || \0'.join(['getprop("ro.product.device") == "%s" || getprop("ro.build.product") == "%s"'
                          % (i, i) for i in device.split(",")]) +
-           ' || abort("This package is for \\"%s\\" devices; '
+           ') || abort("This package is for \\"%s\\" devices\n'
            'this is a \\"" + getprop("ro.product.device") + "\\".");'
-           ');') % device
+           ) % (device)
     self.script.append(self._WordWrap(cmd))
 
   def AssertSomeBootloader(self, *bootloaders):
@@ -108,39 +108,15 @@ class EdifyGenerator(object):
            ");")
     self.script.append(self._WordWrap(cmd))
 
-  def AssertSomeBaseband(self, *basebands):
-    """Assert that the baseband version is one of *basebands."""
-    cmd = ("assert(" +
-           " ||\0".join(['getprop("ro.baseband") == "%s"' % (b,)
-                         for b in basebands]) +
-           ");")
-    self.script.append(self._WordWrap(cmd))
-
   def RunBackup(self, command):
     self.script.append('package_extract_file("system/bin/backuptool.sh", "/tmp/backuptool.sh");')
     self.script.append('package_extract_file("system/bin/backuptool.functions", "/tmp/backuptool.functions");')
-    if not self.info.get("use_set_metadata", False):
-      self.script.append('set_perm(0, 0, 0755, "/tmp/backuptool.sh");')
-      self.script.append('set_perm(0, 0, 0644, "/tmp/backuptool.functions");')
-    else:
-      self.script.append('set_metadata("/tmp/backuptool.sh", "uid", 0, "gid", 0, "mode", 0755);')
-      self.script.append('set_metadata("/tmp/backuptool.functions", "uid", 0, "gid", 0, "mode", 0644);')
+    self.script.append('set_perm(0, 0, 0777, "/tmp/backuptool.sh");')
+    self.script.append('set_perm(0, 0, 0644, "/tmp/backuptool.functions");')
     self.script.append(('run_program("/tmp/backuptool.sh", "%s");' % command))
     if command == "restore":
         self.script.append('delete("/system/bin/backuptool.sh");')
         self.script.append('delete("/system/bin/backuptool.functions");')
-
-  def ValidateSignatures(self, command):
-    if command == "cleanup":
-        self.script.append('delete("/system/bin/otasigcheck.sh");')
-    else:
-        self.script.append('package_extract_file("system/bin/otasigcheck.sh", "/tmp/otasigcheck.sh");')
-        self.script.append('package_extract_file("META-INF/org/cyanogenmod/releasekey", "/tmp/releasekey");')
-        self.script.append('set_metadata("/tmp/otasigcheck.sh", "uid", 0, "gid", 0, "mode", 0755);')
-        self.script.append('run_program("/tmp/otasigcheck.sh");')
-        ## Hax: a failure from run_program doesn't trigger an abort, so have it change the key value and check for "INVALID"
-        self.script.append('sha1_check(read_file("/tmp/releasekey"),"7241e92725436afc79389d4fc2333a2aa8c20230") && abort("Can\'t install this package on top of incompatible data. Please try another package or run a factory reset");')
-
 
   def WIFImac(self, macsymlinks):
     self.script.append('symlink("/data/etc/wlan_macaddr0", "/system/etc/firmware/wlan/macaddr0");')
@@ -189,14 +165,17 @@ class EdifyGenerator(object):
     self.script.append(('apply_patch_space(%d) || abort("Not enough free space '
                         'on /system to apply patches.");') % (amount,))
 
-  def Mount(self, mount_point):
+  def Mount(self, mount_point, mount_by_label = False):
     """Mount the partition with the given mount_point."""
     fstab = self.info.get("fstab", None)
     if fstab:
       p = fstab[mount_point]
-      self.script.append('mount("%s", "%s", "%s", "%s");' %
-                         (p.fs_type, common.PARTITION_TYPES[p.fs_type],
-                          p.device, p.mount_point))
+      if mount_by_label:
+        self.script.append('run_program("/sbin/mount", "%s");' % (mount_point,))
+      else:
+        self.script.append('mount("%s", "%s", "%s", "%s");' %
+                           (p.fs_type, common.PARTITION_TYPES[p.fs_type],
+                            p.device, p.mount_point))
       self.mounts.add(p.mount_point)
 
   def Unmount(self, mount_point):
@@ -221,7 +200,7 @@ class EdifyGenerator(object):
     """Log a message to the screen (if the logs are visible)."""
     self.script.append('ui_print("%s");' % (message,))
 
-  def FormatPartition(self, partition):
+  def FormatPartition(self, partition, mount_by_label = False):
     """Format the given partition, specified by its mount point (eg,
     "/system")."""
 
@@ -229,9 +208,14 @@ class EdifyGenerator(object):
     fstab = self.info.get("fstab", None)
     if fstab:
       p = fstab[partition]
-      self.script.append('format("%s", "%s", "%s", "%s", "%s");' %
-                         (p.fs_type, common.PARTITION_TYPES[p.fs_type],
-                          p.device, p.length, p.mount_point))
+      if mount_by_label:
+        if not p.mount_point in self.mounts:
+          self.script.mount(p.mount_point)
+        self.script.append('run_program("/sbin/rm", "-rf", "%s");' % (p.mount_point,))
+      else:
+        self.script.append('format("%s", "%s", "%s", "%s", "%s");' %
+                           (p.fs_type, common.PARTITION_TYPES[p.fs_type],
+                            p.device, p.length, p.mount_point))
 
   def DeleteFiles(self, file_list):
     """Delete all files in file_list."""
@@ -278,14 +262,13 @@ class EdifyGenerator(object):
       args = {'device': p.device, 'fn': fn}
       if partition_type == "MTD":
         self.script.append(
-            'package_extract_file("%(fn)s", "/tmp/boot.img");'
-            'write_raw_image("/tmp/boot.img", "%(device)s");' % args
+            'write_raw_image(package_extract_file("%(fn)s"), "%(device)s");'
             % args)
       elif partition_type == "EMMC":
         self.script.append(
             'package_extract_file("%(fn)s", "%(device)s");' % args)
       elif partition_type == "BML":
-	        self.script.append(
+          self.script.append(
             ('assert(package_extract_file("%(fn)s", "/tmp/%(device)s.img"),\n'
              '       write_raw_image("/tmp/%(device)s.img", "%(device)s"),\n'
              '       delete("/tmp/%(device)s.img"));') % args)

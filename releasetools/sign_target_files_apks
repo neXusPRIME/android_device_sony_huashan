@@ -227,19 +227,16 @@ def RewriteProps(data):
         value = "/".join(pieces)
       elif key == "ro.build.description":
         pieces = value.split(" ")
-        #assert len(pieces) == 5
+        assert len(pieces) == 5
         pieces[-1] = EditTags(pieces[-1])
         value = " ".join(pieces)
       elif key == "ro.build.tags":
         value = EditTags(value)
       elif key == "ro.build.display.id":
         # change, eg, "JWR66N dev-keys" to "JWR66N"
-        pieces = value.split()
-        if len(pieces) == 2 and pieces[-1].endswith("-keys"):
-          value = pieces[0]
-        elif len(pieces) > 1 and pieces[-1].endswith("-keys"):
-          pieces[-1] = EditTags(pieces[-1])
-          value = " ".join(pieces)
+        value = value.split()
+        if len(value) == 2 and value[1].endswith("-keys"):
+          value = value[0]
       line = key + "=" + value
     if line != original_line:
       print "  replace: ", original_line
@@ -293,14 +290,6 @@ def ReplaceOtaKeys(input_tf_zip, output_tf_zip, misc_info):
   if p.returncode != 0:
     raise common.ExternalError("failed to run dumpkeys")
   common.ZipWriteStr(output_tf_zip, "RECOVERY/RAMDISK/res/keys", data)
-
-  # Save the base64 key representation in the update for key-change
-  # validations
-  p = common.Run(["python", "build/tools/getb64key.py", mapped_keys[0]],
-                 stdout=subprocess.PIPE)
-  data, _ = p.communicate()
-  if p.returncode == 0:
-    common.ZipWriteStr(output_tf_zip, "META/releasekey.txt", data)
 
   # SystemUpdateActivity uses the x509.pem version of the keys, but
   # put into a zipfile system/etc/security/otacerts.zip.

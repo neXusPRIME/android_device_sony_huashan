@@ -36,7 +36,6 @@ if sys.hexversion < 0x02040000:
   sys.exit(1)
 
 import errno
-import hashlib
 import os
 import re
 import shutil
@@ -165,42 +164,6 @@ def AddUserdata(output_zip):
   os.rmdir(temp_dir)
 
 
-def AddUserdataExtra(output_zip):
-  """Create extra userdata image and store it in output_zip."""
-
-  image_props = build_image.ImagePropFromGlobalDict(OPTIONS.info_dict,
-                                                    "data_extra")
-  # If no userdataextra_size is provided for extfs, skip userdata_extra.img.
-  if (image_props.get("fs_type", "").startswith("ext") and
-      not image_props.get("partition_size")):
-    return
-
-  extra_name = image_props.get("partition_name", "extra")
-
-  print "creating userdata_%s.img..." % extra_name
-
-  # The name of the directory it is making an image out of matters to
-  # mkyaffs2image.  So we create a temp dir, and within it we create an
-  # empty dir named "data", and build the image from that.
-  temp_dir = tempfile.mkdtemp()
-  user_dir = os.path.join(temp_dir, "data")
-  os.mkdir(user_dir)
-  img = tempfile.NamedTemporaryFile()
-
-  fstab = OPTIONS.info_dict["fstab"]
-  if fstab:
-    image_props["fs_type" ] = fstab["/data"].fs_type
-  succ = build_image.BuildImage(user_dir, image_props, img.name)
-  assert succ, "build userdata_%s.img image failed" % extra_name
-
-  # Disable size check since this fetches original data partition size
-  #common.CheckSize(img.name, "userdata_extra.img", OPTIONS.info_dict)
-  output_zip.write(img.name, "userdata_%s.img" % extra_name)
-  img.close()
-  os.rmdir(user_dir)
-  os.rmdir(temp_dir)
-
-
 def AddCache(output_zip):
   """Create an empty cache image and store it in output_zip."""
 
@@ -238,40 +201,6 @@ def CopyInfo(output_zip):
   output_zip.write(os.path.join(OPTIONS.input_tmp, "OTA", "android-info.txt"),
                    "android-info.txt")
 
-def AddRadio(output_zip):
-  """If they exist, add RADIO files to the output."""
-  if os.path.isdir(os.path.join(OPTIONS.input_tmp, "RADIO")):
-    for radio_root, radio_dirs, radio_files in os.walk(os.path.join(OPTIONS.input_tmp, "RADIO")):
-      for radio_file in radio_files:
-        output_zip.write(os.path.join(radio_root, radio_file), radio_file)
-
-    # If a filesmap file exists, create a script to flash the radio images based on it
-    filesmap = os.path.join(OPTIONS.input_tmp, "RADIO/filesmap")
-    if os.path.isfile(filesmap):
-      print "creating flash-radio.sh..."
-      filesmap_data = open(filesmap, "r")
-      filesmap_regex = re.compile(r'^(\S+)\s\S+\/by-name\/(\S+).*')
-      tmp_flash_radio = tempfile.NamedTemporaryFile()
-      for filesmap_line in filesmap_data:
-        filesmap_entry = filesmap_regex.search(filesmap_line)
-        if filesmap_entry:
-          tmp_flash_radio.write("fastboot flash %s %s\n" % (filesmap_entry.group(2), filesmap_entry.group(1)))
-      tmp_flash_radio.flush()
-      if os.path.getsize(tmp_flash_radio.name) > 0:
-        output_zip.write(tmp_flash_radio.name, "flash-radio.sh")
-      else:
-        print "flash-radio.sh is empty, skipping..."
-      tmp_flash_radio.close()
-
-def AddDigest(output_zip):
-  """Generate MD5 hashes of each file in the zip and store the results to the zip."""
-  print "creating md5sum-fastboot.md5..."
-  tmp_md5sum = tempfile.NamedTemporaryFile()
-  for md5_file in output_zip.namelist():
-    tmp_md5sum.write("%s  %s\n" % (hashlib.md5(output_zip.read(md5_file)).hexdigest(), md5_file))
-  tmp_md5sum.flush()
-  output_zip.write(tmp_md5sum.name, "md5sum-fastboot.md5")
-  tmp_md5sum.close()
 
 def main(argv):
   bootable_only = [False]
@@ -320,13 +249,8 @@ def main(argv):
     AddSystem(output_zip)
     AddVendor(output_zip)
     AddUserdata(output_zip)
-    AddUserdataExtra(output_zip)
     AddCache(output_zip)
     CopyInfo(output_zip)
-    AddRadio(output_zip)
-
-  # Generating the md5 hashes should always be the last step
-  AddDigest(output_zip)
 
   print "cleaning up..."
   output_zip.close()
