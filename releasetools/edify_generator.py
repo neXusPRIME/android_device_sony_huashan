@@ -108,6 +108,14 @@ class EdifyGenerator(object):
            ");")
     self.script.append(self._WordWrap(cmd))
 
+  def AssertSomeBaseband(self, *basebands):
+    """Assert that the baseband version is one of *basebands."""
+    cmd = ("assert(" +
+           " ||\0".join(['getprop("ro.baseband") == "%s"' % (b,)
+                         for b in basebands]) +
+           ");")
+    self.script.append(self._WordWrap(cmd))
+
   def RunBackup(self, command):
     self.script.append('package_extract_file("system/bin/backuptool.sh", "/tmp/backuptool.sh");')
     self.script.append('package_extract_file("system/bin/backuptool.functions", "/tmp/backuptool.functions");')
@@ -122,6 +130,18 @@ class EdifyGenerator(object):
         self.script.append('delete("/system/bin/backuptool.sh");')
         self.script.append('delete("/system/bin/backuptool.functions");')
 
+  def ValidateSignatures(self, command):
+    if command == "cleanup":
+        self.script.append('delete("/system/bin/otasigcheck.sh");')
+    else:
+        self.script.append('package_extract_file("system/bin/otasigcheck.sh", "/tmp/otasigcheck.sh");')
+        self.script.append('package_extract_file("META-INF/org/cyanogenmod/releasekey", "/tmp/releasekey");')
+        self.script.append('set_metadata("/tmp/otasigcheck.sh", "uid", 0, "gid", 0, "mode", 0755);')
+        self.script.append('run_program("/tmp/otasigcheck.sh");')
+        ## Hax: a failure from run_program doesn't trigger an abort, so have it change the key value and check for "INVALID"
+        self.script.append('sha1_check(read_file("/tmp/releasekey"),"7241e92725436afc79389d4fc2333a2aa8c20230") && abort("Can\'t install this package on top of incompatible data. Please try another package or run a factory reset");')
+
+
   def WIFImac(self, macsymlinks):
     self.script.append('symlink("/data/etc/wlan_macaddr0", "/system/etc/firmware/wlan/macaddr0");')
     self.script.append('symlink("/data/etc/wlan_macaddr1", "/system/etc/firmware/wlan/macaddr1");')
@@ -130,6 +150,9 @@ class EdifyGenerator(object):
 
   def LBLperm(self, customstrings):
     self.script.append('set_metadata("/system/bin/hijack.tar", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
+    self.script.append('set_metadata("/system/bin/philz.tar", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
+    self.script.append('set_metadata("/system/bin/cwm.tar", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
+    self.script.append('set_metadata("/system/bin/ramdisk.tar", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
     self.script.append('set_metadata("/system/bin/wipedata", "uid", 0, "gid", 0, "mode", 0777, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");')
 
   def ShowProgress(self, frac, dur):

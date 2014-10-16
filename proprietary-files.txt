@@ -63,7 +63,7 @@ lib/libmercury.so
 lib/libmmstillomx.so
 
 #
-# Camera Firmware
+# Camera Firmwire
 #
 vendor/camera/APT00YP1.dat
 vendor/camera/SMC08BS2.dat
@@ -92,7 +92,7 @@ lib/libcald_util.so
 # CPU
 #
 bin/mpdecision
-lib/libqc-opt.so:vendor/lib/libqc-opt.so
+lib/libqc-opt.so
 lib/libthermalclient.so
 
 #
