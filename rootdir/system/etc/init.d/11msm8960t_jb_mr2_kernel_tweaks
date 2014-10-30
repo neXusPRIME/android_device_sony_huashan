@@ -1,0 +1,23 @@
+#!/system/bin/sh
+
+# EMMC tweak
+LOOP=`ls -d /sys/block/loop*`;
+RAM=`ls -d /sys/block/ram*`;
+MMC=`ls -d /sys/block/mmc*`;
+
+for j in $LOOP $RAM
+
+do
+
+echo "0" > $j/queue/rotational;
+echo "2048" > $j/queue/read_ahead_kb;
+
+done
+
+echo 512 > /sys/block/mmcblk0/queue/nr_requests;
+echo 2 > /sys/block/mmcblk0/queue/rq_affinity;
+echo 0 > /sys/block/mmcblk0/queue/add_random;
+echo 0 > /sys/block/mmcblk0/queue/iostats;
+
+# RAM tweak
+echo 8192 > /proc/sys/vm/min_free_kbytes

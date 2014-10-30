@@ -1,0 +1,26 @@
+From f38373508c0d25493ddfdee5d408a04f36f11e2e Mon Sep 17 00:00:00 2001
+From: bagyusz <phelyx92@gmail.com>
+Date: Sat, 25 Oct 2014 19:10:28 +0200
+Subject: [PATCH] set internal Antenna thx mikereidis
+
+Change-Id: Ia09b800a86830bffc9214a00a6f6f85b2a7c9e3a
+---
+ fmapp2/src/com/caf/fmradio/FMRadioService.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fmapp2/src/com/caf/fmradio/FMRadioService.java b/fmapp2/src/com/caf/fmradio/FMRadioService.java
+index 2a262e9..009ea67 100644
+--- a/fmapp2/src/com/caf/fmradio/FMRadioService.java
++++ b/fmapp2/src/com/caf/fmradio/FMRadioService.java
+@@ -1632,7 +1632,7 @@ public class FMRadioService extends Service
+             Log.d(LOGTAG, "enableAutoAF done, Status :" +  bStatus);
+ 
+             /* There is no internal Antenna*/
+-            bStatus = mReceiver.setInternalAntenna(false);
++            bStatus = mReceiver.setInternalAntenna(true);
+             Log.d(LOGTAG, "setInternalAntenna done, Status :" +  bStatus);
+ 
+             /* Read back to verify the internal Antenna mode*/
+-- 
+1.9.2
+
