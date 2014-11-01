@@ -74,7 +74,7 @@ WIFI_DRIVER_FW_PATH_AP           := "ap"
 
 BOARD_USE_SONY_MACUPDATE := true
 
-BOARD_HARDWARE_CLASS += device/sony/lbhuashan/cmhw
+BOARD_HARDWARE_CLASS += device/sony/huashan/cmhw
 
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA := true
